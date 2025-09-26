@@ -12,7 +12,7 @@ function App() {
       name: "Buy milk",
       completed: true,
       description: "2 liters of milk",
-      deadline: "12.06.2026",
+      deadline: new Date("2026-06-12T09:30"),
       categories: Categories,
     },
     {
@@ -20,7 +20,7 @@ function App() {
       name: "Do homework",
       completed: false,
       description: "Math exercises",
-      deadline: "13.06.2026",
+      deadline: new Date("2026-06-13T18:45"),
       categories: Categories,
     },
   ]);

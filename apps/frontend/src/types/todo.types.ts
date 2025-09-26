@@ -6,7 +6,7 @@ export interface TodoItemProps {
   completed: boolean;
   categories: Category[];
   description?: string;
-  deadline?: string;
+  deadline?: Date;
 }
 
 export interface TodoItemFunctionsProps {

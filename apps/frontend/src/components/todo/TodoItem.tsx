@@ -29,7 +29,7 @@ export default function TodoItem({
             <p className="text-sm text-gray-700">{description}</p>
           )}
           <div className="flex gap-x-8 text-sm text-gray-600">
-            {deadline && <p>Deadline: {deadline}</p>}
+            {deadline && <p>Deadline: {deadline.toLocaleString()}</p>}
             {categories.length > 0 && (
               <p>Categories: {categories.join(", ")}</p>
             )}
