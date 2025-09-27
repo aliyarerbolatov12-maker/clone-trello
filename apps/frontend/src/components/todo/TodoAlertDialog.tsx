@@ -12,7 +12,6 @@ import {
 
 import { Input } from "@/components/ui/input";
 import { CalendarWithTime } from "@/components/customUI/CalendarWithTime";
-import { Label } from "../ui/label";
 
 export default function TodoAlertDialog() {
   return (
@@ -20,15 +19,17 @@ export default function TodoAlertDialog() {
       <AlertDialogTrigger>Open</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle className="mb-10">Create</AlertDialogTitle>
-          <AlertDialogDescription className="flex flex-col gap-y-6">
-            <Input type="text" placeholder="Name task" />
-            <Input type="text" placeholder="Description" />
-            <div>
-              <span className="text-center block text-black text-[1.2rem] font-medium mb-2">
-                DeadLine
-              </span>
-              <CalendarWithTime />
+          <AlertDialogTitle className="mb-6">Create</AlertDialogTitle>
+          <AlertDialogDescription asChild>
+            <div className="flex flex-col gap-4">
+              <Input type="text" placeholder="Name task" />
+              <Input type="text" placeholder="Description" />
+              <div className="flex flex-col gap-2">
+                <span className="text-black text-lg font-medium text-center">
+                  DeadLine
+                </span>
+                <CalendarWithTime />
+              </div>
             </div>
           </AlertDialogDescription>
         </AlertDialogHeader>
