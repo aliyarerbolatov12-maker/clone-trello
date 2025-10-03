@@ -13,9 +13,41 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 
-export function CalendarWithTime() {
+interface CalendarWithTimeProps {
+  value?: Date;
+  onChange: (date: Date) => void;
+}
+
+export function CalendarWithTime({ value, onChange }: CalendarWithTimeProps) {
   const [open, setOpen] = React.useState(false);
-  const [date, setDate] = React.useState<Date | undefined>(undefined);
+  const [dateTime, setDateTime] = React.useState<Date>(value || new Date());
+
+  React.useEffect(() => {
+    if (value) setDateTime(value);
+  }, [value]);
+
+  const updateDateTime = React.useCallback(
+    (date?: Date, time?: string) => {
+      const updated = new Date(dateTime);
+
+      if (date) {
+        updated.setFullYear(
+          date.getFullYear(),
+          date.getMonth(),
+          date.getDate()
+        );
+      }
+
+      if (time) {
+        const [hours, minutes, seconds] = time.split(":").map(Number);
+        updated.setHours(hours, minutes, seconds || 0);
+      }
+
+      setDateTime(updated);
+      onChange(updated);
+    },
+    [dateTime, onChange]
+  );
 
   return (
     <div className="flex gap-4">
@@ -24,23 +56,23 @@ export function CalendarWithTime() {
           Date
         </Label>
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger>
+          <PopoverTrigger asChild>
             <Button
               variant="outline"
               id="date-picker"
               className="w-32 justify-between font-normal"
             >
-              {date ? date.toLocaleDateString() : "Select date"}
+              {dateTime.toLocaleDateString()}
               <ChevronDownIcon />
             </Button>
           </PopoverTrigger>
-          <PopoverContent className="w-auto overflow-hidden p-0" align="start">
+          <PopoverContent className="w-auto p-0 overflow-hidden" align="start">
             <Calendar
               mode="single"
-              selected={date}
+              selected={dateTime}
               captionLayout="dropdown"
               onSelect={(date) => {
-                setDate(date);
+                updateDateTime(date);
                 setOpen(false);
               }}
             />
@@ -55,7 +87,8 @@ export function CalendarWithTime() {
           type="time"
           id="time-picker"
           step="1"
-          defaultValue="00:00:00"
+          value={dateTime.toTimeString().slice(0, 8)}
+          onChange={(e) => updateDateTime(undefined, e.target.value)}
           className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
         />
       </div>
