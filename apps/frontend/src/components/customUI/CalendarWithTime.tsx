@@ -24,7 +24,7 @@ export function CalendarWithTime() {
           Date
         </Label>
         <Popover open={open} onOpenChange={setOpen}>
-          <PopoverTrigger asChild>
+          <PopoverTrigger>
             <Button
               variant="outline"
               id="date-picker"
