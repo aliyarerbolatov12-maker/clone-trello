@@ -52,7 +52,14 @@ function App() {
           tasks={tasks}
         />
       </div>
-      <TodoDialog />
+      <TodoDialog
+        onSave={(newTask) => {
+          setTasks((prev) => [
+            ...prev,
+            { ...newTask, id: crypto.randomUUID() },
+          ]);
+        }}
+      />
     </div>
   );
 }
