@@ -3,7 +3,7 @@ import "./App.css";
 import { Categories } from "./constant/category.constant";
 import { type TodoItemProps } from "./types/todo.types";
 import TodoList from "./components/todo/TodoList";
-import TodoAlertDialog from "./components/todo/TodoAlertDialog";
+import TodoDialog from "./components/todo/TodoDialog";
 
 function App() {
   const [tasks, setTasks] = useState<TodoItemProps[]>([
@@ -52,7 +52,7 @@ function App() {
           tasks={tasks}
         />
       </div>
-      <TodoAlertDialog />
+      <TodoDialog />
     </div>
   );
 }
