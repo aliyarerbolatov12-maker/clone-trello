@@ -1,6 +1,6 @@
 import { useState } from "react";
 import "./App.css";
-import { Categories } from "./constant/category.constant";
+import { Category } from "./constant/category.constant";
 import { type TodoItemProps } from "./types/todo.types";
 import TodoList from "./components/todo/TodoList";
 import TodoDialog from "./components/todo/TodoDialog";
@@ -13,7 +13,7 @@ function App() {
       completed: true,
       description: "2 liters of milk",
       deadline: new Date("2026-06-12T09:30"),
-      categories: Categories,
+      category: Category.Work,
     },
     {
       id: "2",
@@ -21,7 +21,7 @@ function App() {
       completed: false,
       description: "Math exercises",
       deadline: new Date("2026-06-13T18:45"),
-      categories: Categories,
+      category: Category.None,
     },
   ]);
 

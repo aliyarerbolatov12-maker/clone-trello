@@ -4,7 +4,7 @@ export interface TodoItemProps {
   id: string;
   name: string;
   completed: boolean;
-  categories: Category[];
+  category: Category;
   description?: string;
   deadline?: Date;
 }

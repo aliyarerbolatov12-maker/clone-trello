@@ -7,7 +7,7 @@ export default function TodoItem({
   name,
   description,
   deadline,
-  categories,
+  category: category,
   completed,
   onDelete,
   onEdit,
@@ -30,9 +30,7 @@ export default function TodoItem({
           )}
           <div className="flex gap-x-8 text-sm text-gray-600">
             {deadline && <p>Deadline: {deadline.toLocaleString()}</p>}
-            {categories.length > 0 && (
-              <p>Categories: {categories.join(", ")}</p>
-            )}
+            {category.length > 0 && <p>Categories: {category}</p>}
           </div>
         </div>
       </div>

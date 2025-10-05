@@ -17,7 +17,7 @@ export default function TodoList({
           completed={task.completed}
           description={task.description}
           deadline={task.deadline}
-          categories={task.categories}
+          category={task.category}
           onEdit={onEdit}
           onDelete={onDelete}
           onToggleCompleted={onToggleCompleted}

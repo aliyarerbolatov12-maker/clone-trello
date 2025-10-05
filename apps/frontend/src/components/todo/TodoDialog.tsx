@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { CalendarWithTime } from "@/components/customUI/CalendarWithTime";
 import React, { useState } from "react";
 import type { TodoItemProps } from "@/types/todo.types";
-import { Categories } from "@/constant/category.constant";
+import { Category } from "@/constant/category.constant";
 import { Button } from "@/components/ui/button";
 
 interface TodoProps {
@@ -25,7 +25,7 @@ export default function TodoDialog({ onSave }: TodoProps) {
     name: "",
     completed: false,
     description: "",
-    categories: Categories,
+    category: Category.None,
     deadline: undefined,
   };
 
