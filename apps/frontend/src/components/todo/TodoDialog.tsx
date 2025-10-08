@@ -14,6 +14,7 @@ import React, { useState } from "react";
 import type { TodoItemProps } from "@/types/todo.types";
 import { Category } from "@/constant/category.constant";
 import { Button } from "@/components/ui/button";
+import { SelectCategories } from "./SelectCategories";
 
 interface TodoProps {
   onSave: (todo: TodoItemProps) => void;
@@ -101,6 +102,15 @@ export default function TodoDialog({ onSave }: TodoProps) {
             placeholder="Description"
             value={task.description}
             onChange={handleTaskChange}
+          />
+
+          <SelectCategories
+            onChange={(category) =>
+              setTask((prev) => ({
+                ...prev,
+                category,
+              }))
+            }
           />
 
           <div className="flex flex-col gap-2">
