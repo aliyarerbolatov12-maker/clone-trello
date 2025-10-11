@@ -12,9 +12,15 @@
 
     "strict": true,
     "noUncheckedIndexedAccess": true,
-    "exactOptionalPropertyTypes": true,
+    "exactOptionalPropertyTypes": false,
 
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "baseUrl": "./src",
+    "paths": {
+      "@config/*": ["config/*"],
+      "@common/*": ["common/*"]
+    }
   },
   "include": ["src"]
 }
