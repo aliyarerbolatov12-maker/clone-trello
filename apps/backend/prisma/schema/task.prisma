@@ -1,0 +1,15 @@
+model Task {
+    id          String    @id @default(uuid())
+    name        String
+    description String?
+    isCompleted Boolean   @default(false) @map("is_completed")
+    deadline    DateTime?
+
+    categoryId String?
+    category   Category? @relation(fields: [categoryId], references: [id])
+
+    userId String
+    user   User   @relation(fields: [userId], references: [id])
+
+    @@map("tasks")
+}
