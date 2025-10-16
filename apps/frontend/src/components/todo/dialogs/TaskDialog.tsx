@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Dialog,
   DialogContent,
@@ -7,21 +9,26 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-
 import { Input } from "@/components/ui/input";
 import { CalendarWithTime } from "@/components/customUI/CalendarWithTime";
 import React, { useState } from "react";
-import type { TodoItemProps } from "@/types/todo.types";
+import type { TaskItemProps } from "@/types/task.types";
 import { Category } from "@/constant/category.constant";
 import { Button } from "@/components/ui/button";
-import { SelectCategories } from "./SelectCategories";
+import { SelectCategories } from "../SelectCategories";
 
 interface TodoProps {
-  onSave: (todo: TodoItemProps) => void;
+  onSave: (todo: TaskItemProps) => void;
+  initialTask?: TaskItemProps;
+  mode?: "create" | "edit";
 }
 
-export default function TodoDialog({ onSave }: TodoProps) {
-  const defaultTask: TodoItemProps = {
+export default function TaskDialog({
+  onSave,
+  initialTask,
+  mode = "create",
+}: TodoProps) {
+  const defaultTask: TaskItemProps = {
     id: "",
     name: "",
     completed: false,
@@ -30,40 +37,34 @@ export default function TodoDialog({ onSave }: TodoProps) {
     deadline: undefined,
   };
 
-  const [task, setTask] = useState<TodoItemProps>(defaultTask);
+  const [task, setTask] = useState<TaskItemProps>(initialTask || defaultTask);
   const [errors, setErrors] = useState({ name: "" });
   const [open, setOpen] = useState(false);
 
   const handleTaskChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setTask((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setTask((prev) => ({ ...prev, [name]: value }));
     if (name === "name" && value.trim().length > 0) {
-      setErrors((prev) => ({ ...prev, name: "" }));
+      setErrors({ name: "" });
     }
   };
 
   const handleDateChange = (date: Date) => {
-    setTask((prev) => ({
-      ...prev,
-      deadline: date,
-    }));
+    setTask((prev) => ({ ...prev, deadline: date }));
   };
 
   const handleSave = () => {
-    if (task.name.trim().length === 0) {
+    if (task.name.trim() === "") {
       setErrors({ name: "Task name is required" });
       return;
     }
     onSave(task);
-    setTask(defaultTask);
+    if (mode === "create") setTask(defaultTask);
     setOpen(false);
   };
 
   const handleCancel = () => {
-    setTask(defaultTask);
+    setTask(initialTask || defaultTask);
     setErrors({ name: "" });
     setOpen(false);
   };
@@ -71,14 +72,18 @@ export default function TodoDialog({ onSave }: TodoProps) {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>Create Task</Button>
+        <Button>{mode === "create" ? "Create Task" : "Edit Task"}</Button>
       </DialogTrigger>
 
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Create Task</DialogTitle>
+          <DialogTitle>
+            {mode === "create" ? "Create Task" : "Edit Task"}
+          </DialogTitle>
           <DialogDescription>
-            Fill out the details below to create a new task.
+            {mode === "create"
+              ? "Fill out the details below to create a new task."
+              : "Update the details of your task."}
           </DialogDescription>
         </DialogHeader>
 
@@ -105,12 +110,8 @@ export default function TodoDialog({ onSave }: TodoProps) {
           />
 
           <SelectCategories
-            onChange={(category) =>
-              setTask((prev) => ({
-                ...prev,
-                category,
-              }))
-            }
+            value={task.category}
+            onChange={(category) => setTask((prev) => ({ ...prev, category }))}
           />
 
           <div className="flex flex-col gap-2">
@@ -128,7 +129,9 @@ export default function TodoDialog({ onSave }: TodoProps) {
           <Button variant="outline" onClick={handleCancel}>
             Cancel
           </Button>
-          <Button onClick={handleSave}>Create Task</Button>
+          <Button onClick={handleSave}>
+            {mode === "create" ? "Create Task" : "Save Changes"}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

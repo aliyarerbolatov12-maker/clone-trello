@@ -1,12 +1,12 @@
 import { useState } from "react";
 import "./App.css";
 import { Category } from "./constant/category.constant";
-import { type TodoItemProps } from "./types/todo.types";
-import TodoList from "./components/todo/TodoList";
-import TodoDialog from "./components/todo/TodoDialog";
+import { type TaskItemProps } from "./types/task.types";
+import TaskList from "./components/todo/TaskList";
+import { TaskCreate } from "./components/todo/dialogs/TaskCreate";
 
 function App() {
-  const [tasks, setTasks] = useState<TodoItemProps[]>([
+  const [tasks, setTasks] = useState<TaskItemProps[]>([
     {
       id: "1",
       name: "Buy milk",
@@ -29,8 +29,10 @@ function App() {
     setTasks((tasks) => tasks.filter((t) => t.id != id));
   };
 
-  const handleEdit = (id: string) => {
-    console.log(id);
+  const handleEdit = (updatedTodo: TaskItemProps) => {
+    setTasks((prev) =>
+      prev.map((t) => (t.id === updatedTodo.id ? updatedTodo : t))
+    );
   };
 
   const onToggleCompleted = (id: string) => {
@@ -45,14 +47,14 @@ function App() {
     <div className="App p-4">
       <h1 className="text-2xl font-bold mb-4">My Tasks</h1>
       <div className="flex flex-col gap-4">
-        <TodoList
+        <TaskList
           onDelete={handleDelete}
           onEdit={handleEdit}
           onToggleCompleted={onToggleCompleted}
           tasks={tasks}
         />
       </div>
-      <TodoDialog
+      <TaskCreate
         onSave={(newTask) => {
           setTasks((prev) => [
             ...prev,

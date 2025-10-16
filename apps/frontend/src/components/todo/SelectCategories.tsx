@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Select,
   SelectContent,
@@ -13,17 +13,24 @@ import {
 import { Categories, Category } from "@/constant/category.constant";
 
 type Props = {
+  value?: Category;
   onChange: (category: Category) => void;
 };
 
-export function SelectCategories({ onChange }: Props) {
+export function SelectCategories({ value, onChange }: Props) {
   const [selectedCategory, setSelectedCategory] = useState<Category>(
-    Category.None
+    value || Category.None
   );
 
-  const handleChange = (value: Category) => {
-    setSelectedCategory(value);
-    onChange(value);
+  useEffect(() => {
+    if (value !== undefined) {
+      setSelectedCategory(value);
+    }
+  }, [value]);
+
+  const handleChange = (newValue: Category) => {
+    setSelectedCategory(newValue);
+    onChange(newValue);
   };
 
   return (

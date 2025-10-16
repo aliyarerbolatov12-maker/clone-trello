@@ -1,18 +1,28 @@
-import type { TodoItemFunctionsProps, TodoItemProps } from "@/types/todo.types";
+import type { TaskItemFunctionsProps, TaskItemProps } from "@/types/task.types";
+import { TaskEdit } from "./dialogs/TaskEdit";
 
-interface TodoProps extends TodoItemProps, TodoItemFunctionsProps {}
+interface TodoProps extends TaskItemProps, TaskItemFunctionsProps {}
 
-export default function TodoItem({
+export default function TaskItem({
   id,
   name,
   description,
   deadline,
-  category: category,
+  category,
   completed,
   onDelete,
   onEdit,
   onToggleCompleted,
 }: TodoProps) {
+  const task: TaskItemProps = {
+    id,
+    name,
+    description,
+    deadline,
+    category,
+    completed,
+  };
+
   return (
     <article className="shadow-[0px_5px_10px_2px_rgba(0,0,0,0.2)] flex items-center justify-between min-h-[4rem] p-4">
       <div className="flex gap-y-2 gap-x-4">
@@ -30,17 +40,13 @@ export default function TodoItem({
           )}
           <div className="flex gap-x-8 text-sm text-gray-600">
             {deadline && <p>Deadline: {deadline.toLocaleString()}</p>}
-            {category.length > 0 && <p>Categories: {category}</p>}
+            {category.length > 0 && <p>Category: {category}</p>}
           </div>
         </div>
       </div>
+
       <div className="flex flex-col gap-y-2">
-        <button
-          className="px-3 py-1 bg-blue-500 text-white rounded"
-          onClick={() => onEdit(id)}
-        >
-          Edit
-        </button>
+        <TaskEdit task={task} onSave={(updatedTask) => onEdit(updatedTask)} />
         <button
           className="px-3 py-1 bg-red-500 text-white rounded"
           onClick={() => onDelete(id)}

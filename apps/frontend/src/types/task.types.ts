@@ -1,6 +1,6 @@
 import { Category } from "@/constant/category.constant";
 
-export interface TodoItemProps {
+export interface TaskItemProps {
   id: string;
   name: string;
   completed: boolean;
@@ -9,12 +9,12 @@ export interface TodoItemProps {
   deadline?: Date;
 }
 
-export interface TodoItemFunctionsProps {
-  onEdit: (id: string) => void;
+export interface TaskItemFunctionsProps {
+  onEdit: (todo: TaskItemProps) => void;
   onDelete: (id: string) => void;
   onToggleCompleted: (id: string) => void;
 }
 
-export interface TodoListProps extends TodoItemFunctionsProps {
-  tasks: TodoItemProps[];
+export interface TaskListProps extends TaskItemFunctionsProps {
+  tasks: TaskItemProps[];
 }

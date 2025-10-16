@@ -1,16 +1,16 @@
-import type { TodoListProps } from "@/types/todo.types";
-import TodoItem from "./TodoItem";
+import type { TaskListProps } from "@/types/task.types";
+import TaskItem from "./TaskItem";
 
-export default function TodoList({
+export default function TaskList({
   onDelete,
   onEdit,
   onToggleCompleted,
   tasks,
-}: TodoListProps) {
+}: TaskListProps) {
   return (
     <>
       {tasks.map((task) => (
-        <TodoItem
+        <TaskItem
           key={task.id}
           id={task.id}
           name={task.name}
