@@ -28,7 +28,6 @@ The project replicates Trello’s core functionality — creating boards, lists,
 ---
 
 ## 🏗️ Features
-- ✅ Create, edit, and delete tasks and boards  
 - 🔄 Drag & Drop functionality  
 - 💾 LocalStorage persistence  
 - 🗂️ Filter and categorize tasks  
