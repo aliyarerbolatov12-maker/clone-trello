@@ -13,9 +13,9 @@ import { Input } from "@/components/ui/input";
 import { CalendarWithTime } from "@/components/customUI/CalendarWithTime";
 import React, { useState } from "react";
 import type { TaskItemProps } from "@/types/task.types";
-import { Category } from "@/constant/category.constant";
+import { Categories, Category } from "@/constant/category.constant";
 import { Button } from "@/components/ui/button";
-import { SelectCategories } from "../SelectCategories";
+import { Select } from "@/components/customUI/Select";
 
 interface TodoProps {
   onSave: (todo: TaskItemProps) => void;
@@ -109,8 +109,11 @@ export default function TaskDialog({
             onChange={handleTaskChange}
           />
 
-          <SelectCategories
+          <Select<Category>
             value={task.category}
+            elements={Categories}
+            defaultValue={Category.None}
+            title="categories"
             onChange={(category) => setTask((prev) => ({ ...prev, category }))}
           />
 
