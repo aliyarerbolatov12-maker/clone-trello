@@ -1,49 +1,29 @@
-import { useState } from "react";
 import "./App.css";
-import { type TaskItemProps } from "./types/task.types";
 import TaskList from "./components/todo/TaskList";
 import { TaskCreate } from "./components/todo/dialogs/TaskCreate";
-import { Category } from "./constant/category.constant";
 import TaskFilters from "./components/todo/TaskFilters";
+import { useTaskStore } from "./store/taskStore";
 
 function App() {
-  const [tasks, setTasks] = useState<TaskItemProps[]>([]);
+  const {
+    tasks,
+    filterCategory,
+    filterCompleted,
+    completedOptions,
+    addTask,
+    deleteTask,
+    editTask,
+    toggleCompleted,
+    setFilterCategory,
+    setFilterCompleted,
+  } = useTaskStore();
 
-  const [filterCategory, setFilterCategory] = useState<Category | "All">("All");
-
-  const completedOptions = [
-    { label: "All", value: "All" as const },
-    { label: "Done", value: true },
-    { label: "Not done", value: false },
-  ] as const;
-  type CompletedFilter = (typeof completedOptions)[number]["value"];
-  const [filterCompleted, setFilterCompleted] =
-    useState<CompletedFilter>("All");
-
-  const filterTasks = (task: TaskItemProps) => {
+  const filterTasks = (task: (typeof tasks)[number]) => {
     const matchCategory =
       filterCategory === "All" || task.category === filterCategory;
     const matchCompleted =
       filterCompleted === "All" || task.completed === filterCompleted;
     return matchCategory && matchCompleted;
-  };
-
-  const handleDelete = (id: string) => {
-    setTasks((tasks) => tasks.filter((t) => t.id !== id));
-  };
-
-  const handleEdit = (updatedTodo: TaskItemProps) => {
-    setTasks((prev) =>
-      prev.map((t) => (t.id === updatedTodo.id ? updatedTodo : t))
-    );
-  };
-
-  const onToggleCompleted = (id: string) => {
-    setTasks((tasks) =>
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task
-      )
-    );
   };
 
   return (
@@ -60,21 +40,14 @@ function App() {
 
       <div className="flex flex-col gap-4">
         <TaskList
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          onToggleCompleted={onToggleCompleted}
+          onDelete={deleteTask}
+          onEdit={editTask}
+          onToggleCompleted={toggleCompleted}
           tasks={tasks.filter(filterTasks)}
         />
       </div>
 
-      <TaskCreate
-        onSave={(newTask) => {
-          setTasks((prev) => [
-            ...prev,
-            { ...newTask, id: crypto.randomUUID() },
-          ]);
-        }}
-      />
+      <TaskCreate onSave={addTask} />
     </div>
   );
 }
