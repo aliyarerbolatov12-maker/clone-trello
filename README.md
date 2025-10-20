@@ -8,18 +8,21 @@ The project replicates Trello’s core functionality — creating boards, lists,
 ## ⚙️ Tech Stack
 
 ### 🖥️ Frontend
+
 - ⚛️ **React** + **TypeScript**
 - 🎨 **Tailwind CSS**
 - 🧱 **shadcn/ui** (for modern UI components)
 - 🌐 **Vite** (for fast development)
 - 🧩 **Framer Motion** (for animations)
-
-### 🧠 Coming Soon
-- 🧾 **React Hook Form** + **Zod** (for forms and validation)
-- 🧭 **React Router** (for navigation)
 - 💡 **State management** Zustand
 
+### 🧠 Coming Soon
+
+- 🧾 **React Hook Form** + **Zod** (for forms and validation)
+- 🧭 **React Router** (for navigation)
+
 ### 🔙 Backend
+
 - 🚀 **Express.js** + **TypeScript**
 - 🗄️ **Prisma ORM** (for database)
 - 🧰 **PostgreSQL** (planned)
@@ -28,18 +31,20 @@ The project replicates Trello’s core functionality — creating boards, lists,
 ---
 
 ## 🏗️ Features
-- 🔄 Drag & Drop functionality  
-- 💾 LocalStorage persistence  
-- 🗂️ Filter and categorize tasks  
-- 🧱 Custom categories and tags  
-- 🕒 Deadline validation  
-- 🧑‍💻 Future support for real-time collaboration and authentication  
+
+- 🔄 Drag & Drop functionality
+- 💾 LocalStorage persistence
+- 🗂️ Filter and categorize tasks
+- 🧱 Custom categories and tags
+- 🕒 Deadline validation
+- 🧑‍💻 Future support for real-time collaboration and authentication
 
 ---
 
 ## 🚀 Getting Started
 
 ### 1️⃣ Clone the repository
+
 ```bash
 git clone https://github.com/aliyarerbolatov12-maker/clone-trello.git
 cd clone-trello
@@ -53,3 +58,4 @@ npm run dev:frontend
 
 4️⃣ (Optional) Run the backend
 npm run dev:backend
+```
