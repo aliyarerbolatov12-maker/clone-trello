@@ -16,9 +16,11 @@ interface TaskState {
   toggleCompleted: (id: string) => void;
   setFilterCategory: (category: Category | "All") => void;
   setFilterCompleted: (completed: CompletedFilter) => void;
+
+  getFilteredTasks: () => TaskItemProps[];
 }
 
-export const useTaskStore = create<TaskState>((set) => ({
+export const useTaskStore = create<TaskState>((set, get) => ({
   tasks: [],
   filterCategory: "All",
   filterCompleted: "All",
@@ -54,4 +56,15 @@ export const useTaskStore = create<TaskState>((set) => ({
 
   setFilterCategory: (category) => set({ filterCategory: category }),
   setFilterCompleted: (completed) => set({ filterCompleted: completed }),
+
+  getFilteredTasks: () => {
+    const { tasks, filterCategory, filterCompleted } = get();
+    return tasks.filter((task) => {
+      const matchCategory =
+        filterCategory === "All" || task.category === filterCategory;
+      const matchCompleted =
+        filterCompleted === "All" || task.completed === filterCompleted;
+      return matchCategory && matchCompleted;
+    });
+  },
 }));

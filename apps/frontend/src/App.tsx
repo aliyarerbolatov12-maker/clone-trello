@@ -6,25 +6,19 @@ import { useTaskStore } from "./store/taskStore";
 
 function App() {
   const {
-    tasks,
-    filterCategory,
-    filterCompleted,
-    completedOptions,
+    getFilteredTasks,
     addTask,
     deleteTask,
     editTask,
     toggleCompleted,
+    filterCategory,
+    filterCompleted,
+    completedOptions,
     setFilterCategory,
     setFilterCompleted,
   } = useTaskStore();
 
-  const filterTasks = (task: (typeof tasks)[number]) => {
-    const matchCategory =
-      filterCategory === "All" || task.category === filterCategory;
-    const matchCompleted =
-      filterCompleted === "All" || task.completed === filterCompleted;
-    return matchCategory && matchCompleted;
-  };
+  const tasks = getFilteredTasks();
 
   return (
     <div className="App p-4">
@@ -43,7 +37,7 @@ function App() {
           onDelete={deleteTask}
           onEdit={editTask}
           onToggleCompleted={toggleCompleted}
-          tasks={tasks.filter(filterTasks)}
+          tasks={tasks}
         />
       </div>
 
