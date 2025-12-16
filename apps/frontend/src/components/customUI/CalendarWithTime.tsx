@@ -1,6 +1,3 @@
-"use client";
-
-import * as React from "react";
 import { ChevronDownIcon } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -12,21 +9,18 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-
-interface CalendarWithTimeProps {
-  value?: Date;
-  onChange: (date: Date) => void;
-}
+import { useCallback, useEffect, useState } from "react";
+import type { CalendarWithTimeProps } from "@/types/calendar.types";
 
 export function CalendarWithTime({ value, onChange }: CalendarWithTimeProps) {
-  const [open, setOpen] = React.useState(false);
-  const [dateTime, setDateTime] = React.useState<Date>(value || new Date());
+  const [open, setOpen] = useState(false);
+  const [dateTime, setDateTime] = useState<Date>(value || new Date());
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (value) setDateTime(value);
   }, [value]);
 
-  const updateDateTime = React.useCallback(
+  const updateDateTime = useCallback(
     (date?: Date, time?: string) => {
       const updated = new Date(dateTime);
 

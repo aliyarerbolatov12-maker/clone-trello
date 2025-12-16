@@ -1,4 +1,6 @@
 import { Category } from "@/constant/category.constant";
+import type { CompletedSelectProps } from "./completed.types";
+import type { CategorySelectProps } from "./category.types";
 
 export interface TaskItemProps {
   id: string;
@@ -17,4 +19,15 @@ export interface TaskItemFunctionsProps {
 
 export interface TaskListProps extends TaskItemFunctionsProps {
   tasks: TaskItemProps[];
+}
+
+export interface TaskFiltersProps<T> {
+  category: CategorySelectProps;
+  completed: CompletedSelectProps<T>;
+}
+
+export interface TaskDialogProps {
+  onSave: (todo: TaskItemProps) => void;
+  initialTask?: TaskItemProps;
+  mode?: "create" | "edit";
 }

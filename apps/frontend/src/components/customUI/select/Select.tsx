@@ -1,5 +1,3 @@
-"use client";
-
 import { useState, useEffect } from "react";
 import {
   Select as SelectScadnc,
@@ -10,19 +8,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-type SelectProps<T> = {
-  value?: T;
-  defaultValue: T;
-  elements: T[];
-  title: string;
-  onChange: (value: T) => void;
-};
+import type { SelectProps } from "@/types/select.types";
 
 export function Select<T>({
   value,
   defaultValue,
-  elements,
+  options,
   title,
   onChange,
 }: SelectProps<T>) {
@@ -34,24 +25,28 @@ export function Select<T>({
     }
   }, [value]);
 
-  const handleChange = (newValue: string) => {
-    // преобразуем строку обратно в тип T
-    const parsedValue = elements.find((e) => String(e) === newValue) as T;
-    setSelectedValue(parsedValue);
-    onChange(parsedValue);
+  const handleChange = (label: string) => {
+    const selected = options.find((o) => o.label === label);
+    if (selected) {
+      setSelectedValue(selected.value);
+      onChange(selected.value);
+    }
   };
 
+  const selectedLabel =
+    options.find((o) => o.value === selectedValue)?.label ?? "";
+
   return (
-    <SelectScadnc value={String(selectedValue)} onValueChange={handleChange}>
+    <SelectScadnc value={selectedLabel} onValueChange={handleChange}>
       <SelectTrigger className="w-[180px]">
         <SelectValue placeholder="Select element" />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
           <SelectLabel>{title}</SelectLabel>
-          {elements.map((e) => (
-            <SelectItem key={String(e)} value={String(e)}>
-              {String(e).charAt(0).toUpperCase() + String(e).slice(1)}
+          {options.map((opt) => (
+            <SelectItem key={String(opt.value)} value={opt.label}>
+              {opt.label}
             </SelectItem>
           ))}
         </SelectGroup>

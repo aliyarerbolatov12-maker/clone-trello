@@ -12,22 +12,16 @@ import {
 import { Input } from "@/components/ui/input";
 import { CalendarWithTime } from "@/components/customUI/CalendarWithTime";
 import React, { useState } from "react";
-import type { TaskItemProps } from "@/types/task.types";
-import { Categories, Category } from "@/constant/category.constant";
+import type { TaskDialogProps, TaskItemProps } from "@/types/task.types";
+import CategorySelect from "@/components/customUI/select/CategorySelect";
+import { Category } from "@/constant/category.constant";
 import { Button } from "@/components/ui/button";
-import { Select } from "@/components/customUI/Select";
-
-interface TodoProps {
-  onSave: (todo: TaskItemProps) => void;
-  initialTask?: TaskItemProps;
-  mode?: "create" | "edit";
-}
 
 export default function TaskDialog({
   onSave,
   initialTask,
   mode = "create",
-}: TodoProps) {
+}: TaskDialogProps) {
   const defaultTask: TaskItemProps = {
     id: "",
     name: "",
@@ -109,12 +103,10 @@ export default function TaskDialog({
             onChange={handleTaskChange}
           />
 
-          <Select<Category>
+          <CategorySelect
             value={task.category}
-            elements={Categories}
-            defaultValue={Category.None}
-            title="categories"
             onChange={(category) => setTask((prev) => ({ ...prev, category }))}
+            exclude={["All"]}
           />
 
           <div className="flex flex-col gap-2">
