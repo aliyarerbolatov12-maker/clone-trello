@@ -6,6 +6,7 @@ import TaskFilters from "./components/todo/TaskFilters";
 import { useTasksStore } from "@/store/task/useTasks.store";
 import { useFilterStore } from "@/store/task/useTaskFilter.store";
 import { useFilteredTasks } from "@/hooks/useFilteredTasks";
+import ProgressBar from "./components/customUI/ProgressBar";
 
 function App() {
   const tasks = useFilteredTasks();
@@ -23,9 +24,18 @@ function App() {
     setCompletedSelect,
   } = useFilterStore();
 
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter((task) => task.completed).length;
+  const progress = totalTasks > 0 ? (completedTasks / totalTasks) * 100 : 0;
+
   return (
-    <div className="App p-4">
-      <h1 className="text-2xl font-bold mb-4">My Tasks</h1>
+    <div className="App p-6">
+      <h1 className="text-2xl font-bold mb-6">My Tasks</h1>
+
+      <div className="w-full max-w-lg mx-auto mb-4">
+        <div className="font-medium mb-1 text-gray-700">Progress</div>
+        <ProgressBar progress={progress} />
+      </div>
 
       <TaskFilters
         category={{
@@ -39,7 +49,7 @@ function App() {
         }}
       />
 
-      <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-4 mb-8">
         <TaskList
           onDelete={deleteTask}
           onEdit={editTask}
