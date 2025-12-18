@@ -7,4 +7,5 @@ export interface TasksState {
   deleteTask: (id: string) => void;
   editTask: (updatedTask: TaskItemProps) => void;
   toggleCompleted: (id: string) => void;
+  reorderTasks: (fromIndex: number, toIndex: number) => void;
 }

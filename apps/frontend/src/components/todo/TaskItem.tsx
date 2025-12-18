@@ -1,5 +1,7 @@
-import type { TaskItemFunctionsProps, TaskItemProps } from "@/types/task.types";
+import type { TaskItemProps, TaskItemFunctionsProps } from "@/types/task.types";
 import { TaskEdit } from "./dialogs/TaskEdit";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 interface TodoProps extends TaskItemProps, TaskItemFunctionsProps {}
 
@@ -14,6 +16,14 @@ export default function TaskItem({
   onEdit,
   onToggleCompleted,
 }: TodoProps) {
+  const { attributes, listeners, setNodeRef, transform, transition } =
+    useSortable({ id });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+  };
+
   const task: TaskItemProps = {
     id,
     name,
@@ -24,7 +34,13 @@ export default function TaskItem({
   };
 
   return (
-    <article className="shadow-[0px_5px_10px_2px_rgba(0,0,0,0.2)] flex items-center justify-between min-h-[4rem] p-4">
+    <article
+      ref={setNodeRef}
+      style={style}
+      {...attributes}
+      {...listeners}
+      className="shadow-[0px_5px_10px_2px_rgba(0,0,0,0.2)] flex items-center justify-between min-h-[4rem] p-4"
+    >
       <div className="flex gap-y-2 gap-x-4">
         <input
           type="checkbox"

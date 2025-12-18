@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
+import { arrayMove } from "@dnd-kit/sortable";
 import type { TasksState } from "@/types/store/taskStore.types";
 
 export const useTasksStore = create<TasksState>()(
@@ -29,6 +30,11 @@ export const useTasksStore = create<TasksState>()(
           tasks: state.tasks.map((t) =>
             t.id === id ? { ...t, completed: !t.completed } : t
           ),
+        })),
+
+      reorderTasks: (fromIndex, toIndex) =>
+        set((state) => ({
+          tasks: arrayMove(state.tasks, fromIndex, toIndex),
         })),
     }),
     {
