@@ -5,11 +5,11 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { useTasksStore } from "@/store/task/useTasks.store";
 
 export default function TaskList({
+  tasks,
   onDelete,
   onEdit,
   onToggleCompleted,
 }: TaskListProps) {
-  const tasks = useTasksStore((state) => state.tasks);
   const reorderTasks = useTasksStore((state) => state.reorderTasks);
 
   const handleDragEnd = (event: DragEndEvent) => {
@@ -28,14 +28,9 @@ export default function TaskList({
         {tasks.map((task) => (
           <TaskItem
             key={task.id}
-            id={task.id}
-            name={task.name}
-            completed={task.completed}
-            description={task.description}
-            deadline={task.deadline}
-            category={task.category}
-            onEdit={onEdit}
+            {...task}
             onDelete={onDelete}
+            onEdit={onEdit}
             onToggleCompleted={onToggleCompleted}
           />
         ))}
